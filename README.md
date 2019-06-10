@@ -1,4 +1,5 @@
-# Paystackbake
+# Paystackbake: A Paystack Code Challenge
+#### By Emmanuel Obare
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.1.
 
