@@ -1,0 +1,39 @@
+<div class="container col-md-12"> 
+
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    
+    <h1 class="h2">All Vendors <i data-feather="plus-circle"></i></h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+      <button type="button" (click)="addVendor()" class="btn btn-info">
+        <i data-feather="plus-circle"></i>
+        Add a Vendor/Supplier
+      </button>
+    </div>
+  </div>
+
+  <div class="table-responsive table-container">
+    <table class="table table-hover table-striped table-bordered">  
+      <thead class="thead-light">  
+        <tr>  
+          <th>Vendor Name</th>  
+          <th>Account Number</th> 
+          <th>Bank</th> 
+          <th>Description</th>
+          <th>Action</th> 
+        </tr>  
+      </thead>  
+      <tbody>  
+        <tr *ngFor="let vendor of vendors.body.data">  
+          <td>{{vendor.name}}</td>  
+          <td>{{vendor.details.account_number}}</td>
+          <td>{{vendor.details.bank_name}}</td> 
+          <td>{{vendor.description}}</td> 
+          <td>  
+            <button (click)="updateProduct(product)" style="margin-left: 20px;" class="btn btn-sm btn-outline-secondary" disabled> Pay</button>  
+          </td>  
+        </tr>  
+      </tbody>  
+    </table> 
+  </div> 
+</div> 
+  

@@ -1,0 +1,93 @@
+
+<main role="main" class="px-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Make New Payment</h1>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="newPaymentForm" (ngSubmit)="onSubmit()" novalidate> 
+
+        <div class="form-group row">
+          <label for="balance" class="col-sm-2 col-form-label">Balance</label>
+          <div class="col-sm-10">              
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">NGN</span>
+              </div>
+              <input type="currency" class="form-control" aria-label="Username" aria-describedby="basic-addon1" [value]="balances.body.data[0].balance" readonly>
+            </div>
+          </div>
+        </div> 
+        
+        <div class="form-group row">
+          <label for="vendor" class="col-sm-2 col-form-label">Select Vendor</label>
+          <div class="col-sm-10">              
+            <select id="recipient" class="custom-select form-control" formControlName="recipient" ng-model="selectedRecipient" ng-options="vendor for vendor in vendors.body.data" placeholder="Select Recipient" size="3" required>
+                <option *ngFor="let vendor of vendors.body.data" [ngValue]="vendor.recipient_code" >
+                  {{vendor.name}}  ({{vendor.details.account_number}} - {{vendor.details.bank_name}})
+                </option>
+            </select>
+
+            <div *ngIf="f.recipient.invalid && (f.recipient.dirty || f.recipient.touched)" class="alert alert-danger fade show">
+              <div *ngIf="f.recipient.errors.required">
+                Please select a Vendor
+              </div>
+            </div>
+
+            <button type="button" class="btn btn-link" (click)="navAddVendors()">+Add New Vendor/Supplier</button>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label for="amount" class="col-sm-2 col-form-label">Amount</label>
+          <div class="col-sm-10">              
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="amount">NGN</span>
+              </div>
+              <input type="number" class="form-control" aria-label="amount" aria-describedby="amount" formControlName="amount" required>
+            </div>
+            
+            <div *ngIf="f.amount.invalid && (f.amount.dirty || f.amount.touched)" class="alert alert-danger fade show">
+              <div *ngIf="f.amount.errors.required">
+                Amount is Required.
+              </div>
+            </div>
+
+          </div>
+        </div> 
+
+        <div class="form-group row">
+          <div class="col-sm-2">
+          </div>
+          <div class="col-sm-10">
+            <button (click)="ngxSmartModalService.getModal('myModal').open()" type="submit" class="btn btn-primary" [disabled]="newPaymentForm.pristine || newPaymentForm.invalid">Make Payment</button>           
+          </div>
+        </div>      
+      </form>
+
+      <ngx-smart-modal #myModal identifier="myModal">
+        <h4>Confirm Transfer - <span value="loading..."></span>{{transferID}}</h4>
+
+        <div *ngIf="myModal.hasData()">
+          <pre>{{myModal.getData()}}</pre>
+        </div>
+
+        <div class="alert alert-warning" role="alert">
+          <h4 class="alert-heading">Developer Mode!</h4>
+          <p>The OTP confirmation service is currently using testing credentials, therefore receiving and confirming your one-time-passcode for this transaction is unavailable at the moment.</p>
+          <hr>
+          <p class="mb-0">When the app goes live all functionalities will be restores. In the meantime, you can checkout the statuses of your transactions by clicking the button below.</p>
+          <p> </p>
+          <button (click)="navAllTransfers()" type="submit" class="btn btn-warning">View Transfers</button>
+        </div>
+  
+      </ngx-smart-modal>
+
+    </div>
+  </div>
+</main>
+
+
+
